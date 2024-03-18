@@ -1,9 +1,9 @@
 # CodeIgniter 4 
 
-## Pengertian CodeIgniter
+## 1. Pengertian CodeIgniter
 CodeIgniter adalah kerangka kerja (framework) pengembangan aplikasi web yang bersifat open-source, menggunakan bahasa pemrograman PHP. Dikembangkan oleh EllisLab, CodeIgniter dirancang untuk memudahkan pengembangan aplikasi web dengan menyediakan seperangkat alat dan aturan baku untuk mempercepat proses pengembangan.
 
-## Instalasi CodeIgniter
+## 2. Instalasi CodeIgniter
 Untuk menginstall CodeIgniter kita dapat menggunakan 2 cara yaitu dengan menggunakan composser atau dengan menggunakan cara manual.
 
 jika kita menginstall CodeIgniter menggunakan Composser maka langkah langkahnya sebagai berikut :
@@ -16,7 +16,7 @@ ganti project-root dengan nama file yang akan anda buat.
    ![Screenshot (556)](https://github.com/satriayp262/PBF-CI4/assets/127200227/4940f5a3-4483-4c79-95d3-790473d08ee5)
 4. Klik enter lalu tunggu hingga instalasi CodeIgniternya selesai
 
-## Menjalankan server pengembangan
+## 3. Menjalankan server pengembangan
 Jika anda ingin menjalankan project anda maka anda harus menjalankan server pengembangannya. CodeIgniter menyediakan server bawaan php dengan menggunakan code yang sangat sederhana yaitu dengan menggunakan code berikut :
 ```
  php spark serve
@@ -30,16 +30,41 @@ maka akan muncul halaman selamat datang seperti dibawah ini.
 ![alt text](image-2.png)
 ini berarti aplikasi anda berjalan dengan baik dan anda dapat melakukan perubahan.
 
-## Important Change with index.php
+## 4. Membuat halaman statis 
+untuk membuat halaman statis maka anda harus melakukan perutean terlebih dahulu. Perutean ini menggunakan metode controller. Controller hanya sebuah class yang berfungsi untuk mendelegasikan pekerjaan yang anda buat, yaitu dengan cara sebagai berikut :
+1. Pergi ke file rute yang terletak di app/Config/Routes.php . Maka akan mucul tampilan seperti dibawah ini.
+![alt text](image-3.png)
+2. Tambahkan code seperti dibawah ini.
+```
+use App\Controllers\Pages;
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+$routes->get('pages', [Pages::class, 'index']);
+$routes->get('(:segment)', [Pages::class, 'view']);
+```
+![alt text](image-4.png)
+3. Membuat pengontrol halaman dengan cara Buat file di app/Controllers/PagesController.php dengan kode berikut.
+```
+<?php
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+namespace App\Controllers;
 
-**Please** read the user guide for a better explanation of how CI4 works!
+class Pages extends BaseController
+{
+    public function index()
+    {
+        return view('welcome_message');
+    }
+
+    public function view($page = 'home')
+    {
+        // ...
+    }
+}
+```
+![alt text](image-5.png)
+4. 
+
+
 
 ## Repository Management
 
