@@ -35,15 +35,10 @@ untuk membuat halaman statis maka anda harus melakukan perutean terlebih dahulu.
 1. Pergi ke file rute yang terletak di app/Config/Routes.php . Maka akan mucul tampilan seperti dibawah ini.
 ![alt text](image-3.png)
 2. Tambahkan code seperti dibawah ini.
-```
-use App\Controllers\Pages;
+![alt text](image-9.png)
 
-$routes->get('pages', [Pages::class, 'index']);
-$routes->get('(:segment)', [Pages::class, 'view']);
-```
-![alt text](image-4.png)
-
-3. Membuat pengontrol halaman dengan cara Buat file di app/Controllers/PagesController.php dengan kode berikut.
+3. Membuat pengontrol halaman
+Kita dapat membuat pengontrol halaman dengan cara Buat file di app/Controllers/PagesController.php dengan kode berikut.
 ```
 <?php
 
@@ -63,34 +58,60 @@ class Pages extends BaseController
 }
 ```
 ![alt text](image-5.png)
-4. 
+Anda telah membuat sebuah kelas yang bernama Pages, yang memiliki metode view() yang menerima satu parameter bernama $page. Kelas tersebut juga memiliki metode index() yang serupa dengan pengontrol default yang ditemukan di app/Controllers/Home.php. Metode ini bertujuan untuk menampilkan halaman selamat datang dari CodeIgniter.
 
+4. Membuat tampilan
+Setelah anda membuat metode pertama sekarang saatnya anda membaut beberapa template halaman dasar seperti headerdan footer untuk halaman anda.
+Buat header di app/Views/templates/header.php dan tambahkan kode berikut:
+```
+<!doctype html>
+<html>
+<head>
+    <title>Tutorial Menggunakan CodeIgniter</title>
+</head>
+<body>
 
+    <h1><?= esc($title) ?></h1>
+```
+Sekarang, buat footer di app/Views/templates/footer.php yang menyertakan kode berikut:
+```
+    <em>&copy; 2022</em>
+</body>
+</html>
+```
+5. menambahkan logika ke controller
+Sebelumnya anda telah membuat pengontrol dengan suatu metode view(). Metode ini menerima satu parameter yaitu  nama halaman yang akan dimuat. 
+Body halaman yang akan dimuat terletak pada direktori app/Views .
+Di direktori itu, buat dua file bernama home.php dan about.php . Di dalam file tersebut, ketikkan beberapa teks apa pun yang Anda suka dan simpan.
+![alt text](image-6.png)
+![alt text](image-7.png)
+Untuk memuat halaman tersebut, Anda harus memeriksa apakah halaman yang diminta benar-benar ada. Ini akan menjadi isi metode view() pada PagesController yang dibuat di atas:
+```
+<?php
 
-## Repository Management
+namespace App\Controllers;
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+use CodeIgniter\Exceptions\PageNotFoundException; // Add this line
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+class Pages extends BaseController
+{
+    // ...
 
-## Server Requirements
+    public function view($page = 'home')
+    {
+        if (! is_file(APPPATH . 'Views/pages/' . $page . '.php')) {
+            // Whoops, we don't have a page for that!
+            throw new PageNotFoundException($page);
+        }
 
-PHP version 7.4 or higher is required, with the following extensions installed:
+        $data['title'] = ucfirst($page); // Capitalize the first letter
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+        return view('templates/header', $data)
+            . view('pages/' . $page)
+            . view('templates/footer');
+    }
+}
+```
+![alt text](image-8.png)
 
-> [!WARNING]
-> The end of life date for PHP 7.4 was November 28, 2022.
-> The end of life date for PHP 8.0 was November 26, 2023.
-> If you are still using PHP 7.4 or 8.0, you should upgrade immediately.
-> The end of life date for PHP 8.1 will be November 25, 2024.
-
-Additionally, make sure that the following extensions are enabled in your PHP:
-
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+6. Menjalankan aplikasi
