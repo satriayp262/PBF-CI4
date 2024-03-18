@@ -3,7 +3,30 @@
 ## 1. Pengertian CodeIgniter
 CodeIgniter adalah kerangka kerja (framework) pengembangan aplikasi web yang bersifat open-source, menggunakan bahasa pemrograman PHP. Dikembangkan oleh EllisLab, CodeIgniter dirancang untuk memudahkan pengembangan aplikasi web dengan menyediakan seperangkat alat dan aturan baku untuk mempercepat proses pengembangan.
 
-## 2. Instalasi CodeIgniter
+## 2. Persyaratan Server
+1. PHP dan Ekstensi yang Diperlukan
+Diperlukan PHP versi 7.4 atau lebih baru, dengan ekstensi PHP berikut diaktifkan:
+- internasional
+- mbstring
+- json
+
+2. Basis Data yang Didukung
+Basis data diperlukan untuk sebagian besar pemrograman aplikasi web. Basis data yang didukung saat ini adalah:
+- MySQL melalui MySQLidriver (hanya versi 5.1 ke atas)
+- PostgreSQL melalui Postgredriver (hanya versi 7.4 dan lebih tinggi)
+- SQLite3 melalui SQLite3driver
+- Microsoft SQL Server melalui SQLSRVdriver (hanya versi 2005 dan lebih tinggi)
+- Oracle Database melalui OCI8driver (hanya versi 12.1 dan lebih tinggi)
+
+
+## 3. Model, View, dan Controller
+MVC adalah singkatan dari Model, View, Controller. Ini adalah pola yang digunakan dalam pengembangan aplikasi web untuk mengatur kode agar mudah dikelola, menemukan file yang tepat, dan memudahkan pemeliharaan. Dalam MVC, aplikasi dipisahkan menjadi tiga komponen utama:
+1. Model: Bertanggung jawab untuk mengelola data aplikasi dan menerapkan aturan bisnis khusus yang dibutuhkan oleh aplikasi.
+2. View: Berupa file yang sederhana, dengan sedikit atau tanpa logika, yang digunakan untuk menampilkan informasi kepada pengguna.
+3. Controller: Bertindak sebagai penghubung antara model dan view, menyusun data bolak-balik antara tampilan (atau pengguna yang melihatnya) dan penyimpanan data.
+Penting untuk dicatat bahwa ada berbagai pandangan tentang peran masing-masing elemen dalam MVC, dan dokumentasi ini menawarkan pandangan tertentu tentang hal tersebut. Namun, pendekatan penggunaan setiap bagian dapat disesuaikan sesuai dengan kebutuhan proyek.
+
+## 4. Instalasi CodeIgniter
 Untuk menginstall CodeIgniter kita dapat menggunakan 2 cara yaitu dengan menggunakan composser atau dengan menggunakan cara manual.
 
 jika kita menginstall CodeIgniter menggunakan Composser maka langkah langkahnya sebagai berikut :
@@ -16,7 +39,7 @@ ganti project-root dengan nama file yang akan anda buat.
    ![Screenshot (556)](https://github.com/satriayp262/PBF-CI4/assets/127200227/4940f5a3-4483-4c79-95d3-790473d08ee5)
 4. Klik enter lalu tunggu hingga instalasi CodeIgniternya selesai
 
-## 3. Menjalankan server pengembangan
+## 5. Menjalankan server pengembangan
 Jika anda ingin menjalankan project anda maka anda harus menjalankan server pengembangannya. CodeIgniter menyediakan server bawaan php dengan menggunakan code yang sangat sederhana yaitu dengan menggunakan code berikut :
 ```
  php spark serve
@@ -30,7 +53,7 @@ maka akan muncul halaman selamat datang seperti dibawah ini.
 ![alt text](image-2.png)
 ini berarti aplikasi anda berjalan dengan baik dan anda dapat melakukan perubahan.
 
-## 4. Membuat halaman statis 
+## 6. Membuat halaman statis 
 untuk membuat halaman statis maka anda harus melakukan perutean terlebih dahulu. Perutean ini menggunakan metode controller. Controller hanya sebuah class yang berfungsi untuk mendelegasikan pekerjaan yang anda buat, yaitu dengan cara sebagai berikut :
 1. Pergi ke file rute yang terletak di app/Config/Routes.php . Maka akan mucul tampilan seperti dibawah ini.
 ![alt text](image-3.png)
@@ -125,7 +148,7 @@ localhost:8080/home
 Jika perutean anda dilakukan dengan benar maka anda akan melihat halaman seperti berikut:
 ![alt text](image-12.png)
 
-## 5. Membuat database untuk digunakan
+## 7. Membuat database untuk digunakan
 1. Dalam pengaplikasian CodeIgniter kita dapat menggunakan Database, untuk itu kita harus membuat database terlebih dahulu setelah itu kita konfigurasikan dengan Codeigniter untuk menggunakannya
 ![alt text](image-13.png)
 setelah itu buat tabel lalu isikan tabel yang telah dibuat, berikut adalah code sqlnya :
@@ -190,8 +213,8 @@ Setelah itu tambahkan kode berikut ke model Anda.
 ```
 ![alt text](image-18.png)
 
-4. Menampilkan berita 
-Setelah query ditulis, model harus dikaitkan dengan tampilan yang akan menampilkan item berita kepada pengguna. Ini bisa dilakukan di PagesController yang anda buat sebelumnya.
+## 8. Menampilkan berita 
+1. Setelah query ditulis, model harus dikaitkan dengan tampilan yang akan menampilkan item berita kepada pengguna. Ini bisa dilakukan di PagesController yang anda buat sebelumnya.
 Ubah dulu perutean yang anda buat dengan cara ubah file app/Config/Routes.php Anda , sehingga terlihat seperti berikut:
 ```
 <?php
@@ -209,7 +232,7 @@ $routes->get('(:segment)', [Pages::class, 'view']);
 ```
 ![alt text](image-19.png)
 
-5. Setelah itu buat pengontrol baru di app/Controllers/News.php .
+2. Setelah itu buat pengontrol baru di app/Controllers/News.php .
 ```
 <?php
 
@@ -236,7 +259,7 @@ class News extends BaseController
 ```
 ![alt text](image-20.png)
 
-6. Sekarang data diambil oleh pengontrol melalui model yang anda buat, tetapi belum ada yang ditampilkan. Hal berikutnya yang harus dilakukan adalah meneruskan data ini ke tampilan. Ubah index()metodenya menjadi seperti ini:
+3. Sekarang data diambil oleh pengontrol melalui model yang anda buat, tetapi belum ada yang ditampilkan. Hal berikutnya yang harus dilakukan adalah meneruskan data ini ke tampilan. Ubah index()metodenya menjadi seperti ini:
 ```
 <?php
 
@@ -265,7 +288,7 @@ class News extends BaseController
 ```
 ![alt text](image-21.png)
 
-7. Buat file tampilan news/index
+4. Buat file tampilan news/index
 Buat app/Views/news/index.php dan tambahkan potongan kode berikutnya.
 ```
 <h2><?= esc($title) ?></h2>
@@ -293,7 +316,7 @@ Buat app/Views/news/index.php dan tambahkan potongan kode berikutnya.
 ```
 ![alt text](image-22.png)
 
-8. Halaman ringkasan berita telah selesai, tetapi halaman untuk menampilkan setiap berita secara individual belum tersedia. Model yang sudah dibuat sebelumnya dapat dengan mudah digunakan untuk fungsi ini. Cukup tambahkan beberapa kode ke dalam controller dan buat tampilan baru. Kembali ke kontroler Berita dan perbarui metode show() dengan yang berikut ini:
+5. Halaman ringkasan berita telah selesai, tetapi halaman untuk menampilkan setiap berita secara individual belum tersedia. Model yang sudah dibuat sebelumnya dapat dengan mudah digunakan untuk fungsi ini. Cukup tambahkan beberapa kode ke dalam controller dan buat tampilan baru. Kembali ke kontroler Berita dan perbarui metode show() dengan yang berikut ini:
 ```
 <?php
 
@@ -326,7 +349,7 @@ class News extends BaseController
 ```
 ![alt text](image-23.png)
 
-9. Buat  news/view 
+6. Buat  news/view 
 Satu-satunya hal yang perlu dilakukan adalah membuat tampilan terkait di app/Views/news/view.php . Letakkan kode berikut di file ini.
 ```
 <h2><?= esc($news['title']) ?></h2>
@@ -336,7 +359,7 @@ Satu-satunya hal yang perlu dilakukan adalah membuat tampilan terkait di app/Vie
 10. Kemudian arahkan browser Anda ke halaman “berita”, yaitu localhost:8080/news , Anda akan melihat daftar item berita, yang masing-masing memiliki link untuk menampilkan satu artikel saja.
 ![alt text](image-25.png)
 
-## 6. Membuat item berita
+## 9. Membuat item berita
 Saat ini, Anda telah mempelajari cara membaca data dari database menggunakan CodeIgniter, tetapi Anda belum menambahkan data apa pun ke database. Pada tahap ini, Anda akan mengembangkan pengontrol dan model berita yang telah dibuat sebelumnya untuk menyertakan fungsionalitas ini.
 1. mengaktifkan filter CSRF
 Sebelum membuat formulir, aktifkan perlindungan CSRF.
@@ -516,7 +539,7 @@ Sekarang arahkan browser Anda ke tempat Anda menginstal CodeIgniter dan tambahka
 setelah klik create maka akan muncul tampilan berikut ini 
 ![alt text](image-34.png)
 
-## 7. Migrasi Database
+## 10. Migrasi Database
 Migrasi database merupakan cara yang terstruktur dan terorganisir untuk mengubah struktur database Anda. Anda bisa saja mengedit fragmen SQL secara manual, tetapi Anda kemudian perlu memberi tahu pengembang lain bahwa mereka harus menjalankannya juga. Selain itu, Anda harus melacak perubahan apa yang perlu dijalankan pada mesin produksi ketika Anda menerapkannya kembali.
 Migrasi tabel database melacak migrasi mana yang telah dijalankan, jadi yang perlu Anda lakukan adalah memastikan bahwa migrasi Anda sudah dilakukan dan menjalankan perintah untuk membawa database ke kondisi terkini. Anda juga dapat menggunakan perintah untuk menjalankan migrasi dari semua namespace dengan 
 ``
@@ -565,9 +588,49 @@ class AddBlog extends Migration
     }
 }
 ```
+![alt text](image-35.png)
 
-## 8. 
+3. Grup Database
+Migrasi hanya akan diterapkan pada satu grup database. Jika Anda memiliki beberapa grup yang didefinisikan di `app/Config/Database.php`, maka secara default migrasi akan dijalankan pada grup yang ditentukan dalam `$defaultGroup` dalam file konfigurasi tersebut.
+Ada situasi di mana Anda mungkin memerlukan skema yang berbeda untuk grup database yang berbeda. Misalnya, Anda mungkin memiliki satu database untuk informasi umum situs dan database lain untuk data yang lebih penting.
+Anda dapat memastikan bahwa migrasi hanya dijalankan pada grup database yang diinginkan dengan mengatur properti `$DBGroup` pada migrasi Anda. Nama ini harus identik dengan nama grup database yang diinginkan.
+```
+<?php
+namespace App\Database\Migrations;
+use CodeIgniter\Database\Migration;
+class AddBlog extends Migration
+{
+    protected $DBGroup = 'alternate_db_group';
 
-## 9. 
+    public function up()
+    {
+        // ...
+    }
 
-## 10. 
+    public function down()
+    {
+        // ...
+    }
+}
+```
+![alt text](image-36.png)
+
+4. Ruang Nama
+Pustaka migrasi dapat secara otomatis memindai semua ruang nama yang telah Anda tetapkan dalam `app/Config/Autoload.php` atau dimuat dari sumber eksternal seperti Composer. Hal ini dilakukan menggunakan properti `$psr4` untuk mencocokkan nama direktori. Sebagai hasilnya, semua migrasi yang ditemukan di `Database/Migrations` akan disertakan.
+Setiap ruang nama memiliki versi migrasi yang independen. Hal ini memungkinkan Anda untuk meningkatkan atau menurunkan versi setiap modul (ruang nama) tanpa memengaruhi ruang nama lainnya.
+Misalnya, anggap kita memiliki ruang nama berikut yang ditentukan dalam file konfigurasi Autoload:
+```
+<?php
+
+$psr4 = [
+    'App'       => APPPATH,
+    'MyCompany' => ROOTPATH . 'MyCompany',
+];
+```
+![alt text](image-37.png)
+
+5. Perintah Command-Line
+Untuk melakukan migrasi kita dapat menggunakan perintah command-line sebagai berikut:
+```
+php spark migrate
+```
