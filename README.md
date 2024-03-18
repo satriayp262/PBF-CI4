@@ -8,17 +8,27 @@ Untuk menginstall CodeIgniter kita dapat menggunakan 2 cara yaitu dengan menggun
 
 jika kita menginstall CodeIgniter menggunakan Composser maka langkah langkahnya sebagai berikut :
 1. Buka command prompt pada device anda.
-2. Ketik code berikut : composer create-project codeigniter4/appstarter project-root (ganti project-root dengan nama file yang akan anda buat).
+2. Ketik code berikut : 
+```
+composer create-project codeigniter4/appstarter project-root
+```
+ganti project-root dengan nama file yang akan anda buat.
+
    ![Screenshot (556)](https://github.com/satriayp262/PBF-CI4/assets/127200227/4940f5a3-4483-4c79-95d3-790473d08ee5)
 4. Klik enter lalu tunggu hingga instalasi CodeIgniternya selesai
 
 ## Menjalankan server pengembangan
-Jika anda ingin menjalankan project anda maka anda harus menjalankan server pengembangannya. CodeIgniter menyediakan server bawaan php dengan menggunakan code yang sangat sederhana yaitu dengan menggunakan code berikut : php spark serve
+Jika anda ingin menjalankan project anda maka anda harus menjalankan server pengembangannya. CodeIgniter menyediakan server bawaan php dengan menggunakan code yang sangat sederhana yaitu dengan menggunakan code berikut :
+```
+ php spark serve
+```
 ![alt text](image-1.png)
-
-
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+setelah itu nada pergi ke browser dan ketikan
+```
+http://localhost:8080 
+```
+maka akan muncul halaman selamat datang seperti dibawah ini.
+![alt text](image-2.png)
 
 ## Important Change with index.php
 
