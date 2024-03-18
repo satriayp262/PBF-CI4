@@ -1,27 +1,17 @@
-# CodeIgniter 4 Application Starter
+# CodeIgniter 4 
 
-## What is CodeIgniter?
+## Pengertian CodeIgniter
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+CodeIgniter adalah kerangka kerja (framework) pengembangan aplikasi web yang bersifat open-source, menggunakan bahasa pemrograman PHP. Dikembangkan oleh EllisLab, CodeIgniter dirancang untuk memudahkan pengembangan aplikasi web dengan menyediakan seperangkat alat dan aturan baku untuk mempercepat proses pengembangan.
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+## Instalasi CodeIgniter
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+Untuk menginstall CodeIgniter kita dapat menggunakan 2 cara yaitu dengan menggunakan composser atau dengan menggunakan cara manual.
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
-
-## Installation & updates
-
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
-
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+jika kita menginstall CodeIgniter menggunakan Composser maka langkah langkahnya sebagai berikut :
+1. Buka command prompt pada device anda.
+2. Ketik code berikut : composer create-project codeigniter4/appstarter project-root (ganti project-root dengan nama file yang akan anda buat).
+3. Klik enter lalu tunggu hingga instalasi CodeIgniternya selesai
 
 ## Setup
 
