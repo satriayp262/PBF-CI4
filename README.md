@@ -11,7 +11,8 @@ Untuk menginstall CodeIgniter kita dapat menggunakan 2 cara yaitu dengan menggun
 jika kita menginstall CodeIgniter menggunakan Composser maka langkah langkahnya sebagai berikut :
 1. Buka command prompt pada device anda.
 2. Ketik code berikut : composer create-project codeigniter4/appstarter project-root (ganti project-root dengan nama file yang akan anda buat).
-3. Klik enter lalu tunggu hingga instalasi CodeIgniternya selesai
+   ![Screenshot (556)](https://github.com/satriayp262/PBF-CI4/assets/127200227/4940f5a3-4483-4c79-95d3-790473d08ee5)
+4. Klik enter lalu tunggu hingga instalasi CodeIgniternya selesai
 
 ## Setup
 
