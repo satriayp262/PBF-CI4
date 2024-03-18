@@ -13,7 +13,6 @@ jika kita menginstall CodeIgniter menggunakan Composser maka langkah langkahnya 
 composer create-project codeigniter4/appstarter project-root
 ```
 ganti project-root dengan nama file yang akan anda buat.
-
    ![Screenshot (556)](https://github.com/satriayp262/PBF-CI4/assets/127200227/4940f5a3-4483-4c79-95d3-790473d08ee5)
 4. Klik enter lalu tunggu hingga instalasi CodeIgniternya selesai
 
@@ -29,6 +28,7 @@ http://localhost:8080
 ```
 maka akan muncul halaman selamat datang seperti dibawah ini.
 ![alt text](image-2.png)
+ini berarti aplikasi anda berjalan dengan baik dan anda dapat melakukan perubahan.
 
 ## Important Change with index.php
 
