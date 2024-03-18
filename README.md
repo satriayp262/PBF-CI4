@@ -42,6 +42,7 @@ $routes->get('pages', [Pages::class, 'index']);
 $routes->get('(:segment)', [Pages::class, 'view']);
 ```
 ![alt text](image-4.png)
+
 3. Membuat pengontrol halaman dengan cara Buat file di app/Controllers/PagesController.php dengan kode berikut.
 ```
 <?php
