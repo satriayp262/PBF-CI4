@@ -126,7 +126,7 @@ Jika perutean anda dilakukan dengan benar maka anda akan melihat halaman seperti
 ![alt text](image-12.png)
 
 ## 5. Membuat database untuk digunakan
-Dalam pengaplikasian CodeIgniter kita dapat menggunakan Database, untuk itu kita harus membuat database terlebih dahulu setelah itu kita konfigurasikan dengan Codeigniter untuk menggunakannya
+1. Dalam pengaplikasian CodeIgniter kita dapat menggunakan Database, untuk itu kita harus membuat database terlebih dahulu setelah itu kita konfigurasikan dengan Codeigniter untuk menggunakannya
 ![alt text](image-13.png)
 setelah itu buat tabel lalu isikan tabel yang telah dibuat, berikut adalah code sqlnya :
 a. Membuat table
@@ -151,7 +151,7 @@ INSERT INTO news VALUES
 ```
 ![alt text](image-15.png)
 
-Setelah database terbuat maka kita harus menghubungkan database tersebut dengan cara menkonfigurasikan file .env dengan benar seperti berikut ini :
+2. Setelah database terbuat maka kita harus menghubungkan database tersebut dengan cara menkonfigurasikan file .env dengan benar seperti berikut ini :
 ```
 database.default.hostname = localhost
 database.default.database = berita
@@ -161,7 +161,7 @@ database.default.DBDriver = MySQLi
 ```
 ![alt text](image-16.png)
 
-Membuat Model 
+3. Membuat Model 
 Daripada menuliskan query langsung pada controller lebih baik menuliskannya pada model. sehingga kita bisa menggunakannya lagi nanti. untuk membuat model kita dapat melakukannya seperti berikut ini :
 1. Buka direktori app/Models dan buat file baru bernama NewsModel.php dan tambahkan kode berikut.
 ```
@@ -190,7 +190,7 @@ Setelah itu tambahkan kode berikut ke model Anda.
 ```
 ![alt text](image-18.png)
 
-Menampilkan berita 
+4. Menampilkan berita 
 Setelah query ditulis, model harus dikaitkan dengan tampilan yang akan menampilkan item berita kepada pengguna. Ini bisa dilakukan di PagesController yang anda buat sebelumnya.
 Ubah dulu perutean yang anda buat dengan cara ubah file app/Config/Routes.php Anda , sehingga terlihat seperti berikut:
 ```
@@ -209,7 +209,7 @@ $routes->get('(:segment)', [Pages::class, 'view']);
 ```
 ![alt text](image-19.png)
 
-Setelah itu buat pengontrol baru di app/Controllers/News.php .
+5. Setelah itu buat pengontrol baru di app/Controllers/News.php .
 ```
 <?php
 
@@ -236,7 +236,7 @@ class News extends BaseController
 ```
 ![alt text](image-20.png)
 
-Sekarang data diambil oleh pengontrol melalui model yang anda buat, tetapi belum ada yang ditampilkan. Hal berikutnya yang harus dilakukan adalah meneruskan data ini ke tampilan. Ubah index()metodenya menjadi seperti ini:
+6. Sekarang data diambil oleh pengontrol melalui model yang anda buat, tetapi belum ada yang ditampilkan. Hal berikutnya yang harus dilakukan adalah meneruskan data ini ke tampilan. Ubah index()metodenya menjadi seperti ini:
 ```
 <?php
 
@@ -265,7 +265,7 @@ class News extends BaseController
 ```
 ![alt text](image-21.png)
 
-Buat file tampilan news/index
+7. Buat file tampilan news/index
 Buat app/Views/news/index.php dan tambahkan potongan kode berikutnya.
 ```
 <h2><?= esc($title) ?></h2>
@@ -293,7 +293,7 @@ Buat app/Views/news/index.php dan tambahkan potongan kode berikutnya.
 ```
 ![alt text](image-22.png)
 
-Halaman ringkasan berita telah selesai, tetapi halaman untuk menampilkan setiap berita secara individual belum tersedia. Model yang sudah dibuat sebelumnya dapat dengan mudah digunakan untuk fungsi ini. Cukup tambahkan beberapa kode ke dalam controller dan buat tampilan baru. Kembali ke kontroler Berita dan perbarui metode show() dengan yang berikut ini:
+8. Halaman ringkasan berita telah selesai, tetapi halaman untuk menampilkan setiap berita secara individual belum tersedia. Model yang sudah dibuat sebelumnya dapat dengan mudah digunakan untuk fungsi ini. Cukup tambahkan beberapa kode ke dalam controller dan buat tampilan baru. Kembali ke kontroler Berita dan perbarui metode show() dengan yang berikut ini:
 ```
 <?php
 
@@ -326,9 +326,111 @@ class News extends BaseController
 ```
 ![alt text](image-23.png)
 
-Buat  news/view 
+9. Buat  news/view 
 Satu-satunya hal yang perlu dilakukan adalah membuat tampilan terkait di app/Views/news/view.php . Letakkan kode berikut di file ini.
 ```
 <h2><?= esc($news['title']) ?></h2>
 <p><?= esc($news['body']) ?></p>
 ```
+![alt text](image-24.png)
+10. Kemudian arahkan browser Anda ke halaman “berita”, yaitu localhost:8080/news , Anda akan melihat daftar item berita, yang masing-masing memiliki link untuk menampilkan satu artikel saja.
+![alt text](image-25.png)
+
+## 6. Membuat item berita
+Saat ini, Anda telah mempelajari cara membaca data dari database menggunakan CodeIgniter, tetapi Anda belum menambahkan data apa pun ke database. Pada tahap ini, Anda akan mengembangkan pengontrol dan model berita yang telah dibuat sebelumnya untuk menyertakan fungsionalitas ini.
+1. mengaktifkan filter CSRF
+Sebelum membuat formulir, aktifkan perlindungan CSRF.
+Buka file app/Config/Filters.php dan perbarui $methodsproperti seperti berikut:
+```
+<?php
+
+namespace Config;
+
+use CodeIgniter\Config\BaseConfig;
+
+class Filters extends BaseConfig
+{
+    // ...
+
+    public $methods = [
+        'post' => ['csrf'],
+    ];
+
+    // ...
+}
+```
+![alt text](image-26.png)
+Ini mengkonfigurasi filter CSRF untuk diaktifkan untuk semua permintaan POST .
+
+2. Menambahkan Aturan Perutean
+Sebelum Anda dapat mulai menambahkan item berita ke dalam aplikasi CodeIgniter Anda, Anda harus menambahkan aturan tambahan ke file app/Config/Routes.php . Pastikan file Anda berisi yang berikut ini:
+```
+<?php
+
+// ...
+
+use App\Controllers\News;
+use App\Controllers\Pages;
+
+$routes->get('news', [News::class, 'index']);
+$routes->get('news/new', [News::class, 'new']); // Add this line
+$routes->post('news', [News::class, 'create']); // Add this line
+$routes->get('news/(:segment)', [News::class, 'show']);
+
+$routes->get('pages', [Pages::class, 'index']);
+$routes->get('(:segment)', [Pages::class, 'view']);
+```
+![alt text](image-27.png)
+
+3. Buat formulir
+Untuk menambahkan data ke database, Anda perlu membuat sebuah formulir di mana Anda dapat memasukkan informasi yang akan disimpan. Ini memerlukan formulir dengan dua bidang: satu untuk judul dan satu lagi untuk teks. Anda akan menerima bantuan dari judul kita di model.
+Buatlah sebuah tampilan baru di direktori `app/Views/news/create.php`:
+```
+<h2><?= esc($title) ?></h2>
+
+<?= session()->getFlashdata('error') ?>
+<?= validation_list_errors() ?>
+
+<form action="/news" method="post">
+    <?= csrf_field() ?>
+
+    <label for="title">Title</label>
+    <input type="input" name="title" value="<?= set_value('title') ?>">
+    <br>
+
+    <label for="body">Text</label>
+    <textarea name="body" cols="45" rows="4"><?= set_value('body') ?></textarea>
+    <br>
+
+    <input type="submit" name="submit" value="Create news item">
+</form>
+```
+![alt text](image-28.png)
+
+4. Pengontrol Berita
+Kembali ke NewsController Anda.
+Tambahkan News::new() untuk Menampilkan Formulir
+Pertama, buatlah metode untuk menampilkan form HTML yang telah Anda buat.
+```
+<?php
+
+namespace App\Controllers;
+
+use App\Models\NewsModel;
+use CodeIgniter\Exceptions\PageNotFoundException;
+
+class News extends BaseController
+{
+    // ...
+
+    public function new()
+    {
+        helper('form');
+
+        return view('templates/header', ['title' => 'Create a news item'])
+            . view('news/create')
+            . view('templates/footer');
+    }
+}
+```
+![alt text](image-29.png)
