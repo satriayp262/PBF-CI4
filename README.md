@@ -434,3 +434,140 @@ class News extends BaseController
 }
 ```
 ![alt text](image-29.png)
+
+5. Tambahkan News::create() untuk Membuat Item Berita
+Selanjutnya, tambahkan metode `News::create()` untuk membuat item berita dari data yang dikirimkan.
+Dalam metode ini, Anda akan melakukan tiga tindakan:
+1. Memeriksa apakah data yang dikirimkan memenuhi aturan validasi.
+2. Menyimpan item berita ke dalam database.
+3. Mengembalikan halaman sukses.
+```
+<?php
+namespace App\Controllers;
+use App\Models\NewsModel;
+use CodeIgniter\Exceptions\PageNotFoundException;
+
+class News extends BaseController
+{
+    // ...
+    public function create()
+    {
+        helper('form');
+
+        $data = $this->request->getPost(['title', 'body']);
+
+        // Checks whether the submitted data passed the validation rules.
+        if (! $this->validateData($data, [
+            'title' => 'required|max_length[255]|min_length[3]',
+            'body'  => 'required|max_length[5000]|min_length[10]',
+        ])) {
+            // The validation fails, so returns the form.
+            return $this->new();
+        }
+
+        // Gets the validated data.
+        $post = $this->validator->getValidated();
+
+        $model = model(NewsModel::class);
+
+        $model->save([
+            'title' => $post['title'],
+            'slug'  => url_title($post['title'], '-', true),
+            'body'  => $post['body'],
+        ]);
+
+        return view('templates/header', ['title' => 'Create a news item'])
+            . view('news/success')
+            . view('templates/footer');
+    }
+}
+```
+Kode di atas menambahkan banyak fungsi.
+![alt text](image-30.png)
+
+6. Membuat Halaman Sukses
+Setelah ini, file tampilan dimuat dan dikembalikan untuk menampilkan pesan sukses. Buat tampilan di app/Views/news/success.php dan tulis pesan sukses seperti berikut ini :
+```
+<p>News item created successfully.</p>
+```
+![alt text](image-31.png)
+
+7. Memperbarui Model Berita
+Perbarui Model Berita Anda untuk memastikan bahwa data dapat disimpan dengan benar. Metode `save()` yang digunakan akan menentukan apakah informasi harus dimasukkan atau diperbarui, berdasarkan keberadaan kunci utama. Dalam kasus ini, karena tidak ada bidang id yang diteruskan, baris baru akan dimasukkan ke dalam tabelnya, yaitu news.
+Namun, secara default, metode insert dan update pada Model tidak akan menyimpan data dengan benar karena tidak mengetahui bidang mana yang aman untuk diperbarui. Oleh karena itu, Anda perlu mengedit NewsModel untuk memberikan daftar bidang yang dapat diperbarui di properti `$allowedFields`.
+```
+<?php
+
+namespace App\Models;
+use CodeIgniter\Model;
+
+class NewsModel extends Model
+{
+    protected $table = 'news';
+
+    protected $allowedFields = ['title', 'slug', 'body'];
+}
+```
+![alt text](image-32.png)
+
+8. Buat Item Berita
+Sekarang arahkan browser Anda ke tempat Anda menginstal CodeIgniter dan tambahkan /news/new ke URL. Tambahkan beberapa berita dan periksa halaman berbeda yang Anda buat.
+![alt text](image-33.png)
+setelah klik create maka akan muncul tampilan berikut ini 
+![alt text](image-34.png)
+
+## 7. Migrasi Database
+Migrasi database merupakan cara yang terstruktur dan terorganisir untuk mengubah struktur database Anda. Anda bisa saja mengedit fragmen SQL secara manual, tetapi Anda kemudian perlu memberi tahu pengembang lain bahwa mereka harus menjalankannya juga. Selain itu, Anda harus melacak perubahan apa yang perlu dijalankan pada mesin produksi ketika Anda menerapkannya kembali.
+Migrasi tabel database melacak migrasi mana yang telah dijalankan, jadi yang perlu Anda lakukan adalah memastikan bahwa migrasi Anda sudah dilakukan dan menjalankan perintah untuk membawa database ke kondisi terkini. Anda juga dapat menggunakan perintah untuk menjalankan migrasi dari semua namespace dengan 
+``
+spark migrate --all
+``
+1. Nama file migrasi
+Setiap file migrasi dimulai dengan nomor migrasi diikuti oleh garis bawah dan deskripsi yang menjelaskan migrasi tersebut. Tahun, bulan, dan tanggal dapat dipisahkan dengan tanda hubung, garis bawah, atau tanpa pemisah sama sekali. Misalnya:
+- 31-10-2012-100538_AlterBlogTrackViews.php
+- 2012_10_31_100539_AlterBlogAddTranslations.php
+- 20121031100537_AddBlog.php
+Ini membantu dalam menghindari konflik penomoran saat bekerja dalam lingkungan tim.
+
+2. Buat migrasi
+Membuat migrasi pertama untuk situs baru yang memiliki blog. Semua migrasi akan disimpan dalam direktori `app/Database/Migrations/` dan memiliki nama seperti `2022-01-31-013057_AddBlog.php`.
+```
+<?php
+namespace App\Database\Migrations;
+use CodeIgniter\Database\Migration;
+class AddBlog extends Migration
+{
+    public function up()
+    {
+        $this->forge->addField([
+            'blog_id' => [
+                'type'           => 'INT',
+                'constraint'     => 5,
+                'unsigned'       => true,
+                'auto_increment' => true,
+            ],
+            'blog_title' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '100',
+            ],
+            'blog_description' => [
+                'type' => 'TEXT',
+                'null' => true,
+            ],
+        ]);
+        $this->forge->addKey('blog_id', true);
+        $this->forge->createTable('blog');
+    }
+
+    public function down()
+    {
+        $this->forge->dropTable('blog');
+    }
+}
+```
+
+## 8. 
+
+## 9. 
+
+## 10. 
