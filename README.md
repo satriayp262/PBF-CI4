@@ -1,11 +1,9 @@
 # CodeIgniter 4 
 
 ## Pengertian CodeIgniter
-
 CodeIgniter adalah kerangka kerja (framework) pengembangan aplikasi web yang bersifat open-source, menggunakan bahasa pemrograman PHP. Dikembangkan oleh EllisLab, CodeIgniter dirancang untuk memudahkan pengembangan aplikasi web dengan menyediakan seperangkat alat dan aturan baku untuk mempercepat proses pengembangan.
 
 ## Instalasi CodeIgniter
-
 Untuk menginstall CodeIgniter kita dapat menggunakan 2 cara yaitu dengan menggunakan composser atau dengan menggunakan cara manual.
 
 jika kita menginstall CodeIgniter menggunakan Composser maka langkah langkahnya sebagai berikut :
@@ -13,7 +11,10 @@ jika kita menginstall CodeIgniter menggunakan Composser maka langkah langkahnya 
 2. Ketik code berikut : composer create-project codeigniter4/appstarter project-root (ganti project-root dengan nama file yang akan anda buat).
 3. Klik enter lalu tunggu hingga instalasi CodeIgniternya selesai
 
-## Setup
+## Menjalankan server pengembangan
+Jika anda ingin menjalankan project anda maka anda harus menjalankan server pengembangannya. CodeIgniter menyediakan server bawaan php dengan menggunakan code yang sangat sederhana yaitu dengan menggunakan code berikut : php spark serve
+![alt text](image-1.png)
+
 
 Copy `env` to `.env` and tailor for your app, specifically the baseURL
 and any database settings.
